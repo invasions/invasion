@@ -74,3 +74,4 @@ const jString=java.lang.String;
 
 const ByteBuffer=java.nio.ByteBuffer;
 const ByteOrder=java.nio.ByteOrder;
+const directory=Environment.getExternalStorageDirectory().getAbsolutePath()+"/games/com.mojang/minecraftWorlds/"
