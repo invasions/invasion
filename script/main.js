@@ -33,3 +33,4 @@ for(let is=0;is<addSelf.items.length;is++){
 	Player.addItemCreativeInv(addSelf.items[is]["id"],1,0);
 };
 
+const GameType={SURVIVAL:0,CREATIVE:1};
