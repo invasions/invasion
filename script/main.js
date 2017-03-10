@@ -34,3 +34,4 @@ for(let is=0;is<addSelf.items.length;is++){
 };
 
 const GameType={SURVIVAL:0,CREATIVE:1};
+
