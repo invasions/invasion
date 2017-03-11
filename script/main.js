@@ -33,5 +33,18 @@ for(let is=0;is<addSelf.items.length;is++){
 	Player.addItemCreativeInv(addSelf.items[is]["id"],1,0);
 };
 
+Item.setMaxDamage(addSelf.items[10]["id"],addSelf.items[10]["maxDamage"]);
+
 const GameType={SURVIVAL:0,CREATIVE:1};
 
+function useItem(x,y,z,itemId,blockId,side,itemDamage,blockDamage){
+	
+}
+
+function modTick(){
+	
+}
+
+function entityAddedHook(entity){
+	
+}
