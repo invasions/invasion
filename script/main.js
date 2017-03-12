@@ -37,14 +37,40 @@ Item.setMaxDamage(addSelf.items[10]["id"],addSelf.items[10]["maxDamage"]);
 
 const GameType={SURVIVAL:0,CREATIVE:1};
 
+var Invasion={
+	useItem:function(x,y,z,itemId,blockId,side,itemDamage,blockDamage){
+		
+	},
+	attackHook:function(attacker,victim){
+		
+	},
+	modTick:function(){
+		
+	},
+	destroyBlock:function(x,y,z,side){
+		
+	},
+	entityAddedHook:function(entity){
+		
+	}
+};
+
 function useItem(x,y,z,itemId,blockId,side,itemDamage,blockDamage){
-	
+	Invasion.useItem(x,y,z,itemId,blockId,side,itemDamage,blockDamage);
+}
+
+function attackHook(attacker,victim){
+	Invasion.attackHook(attacker,victim);
 }
 
 function modTick(){
-	
+	Invasion.modTick();
+}
+
+function destroyBlock(x,y,z,side){
+	Invasion.destroyBlock(x,y,z,side);
 }
 
 function entityAddedHook(entity){
-	
+	Invasion.entityAddedHook(entity);
 }
