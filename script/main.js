@@ -39,7 +39,9 @@ const GameType={SURVIVAL:0,CREATIVE:1};
 
 var Invasion={
 	useItem:function(x,y,z,itemId,blockId,side,itemDamage,blockDamage){
-		
+		if((itemId==addSelf.items[16]["id"]||itemId==addSelf.items[17]["id"])&&blockId==addSelf.blocks["nexusBlock"]["id"]){
+			//
+		}
 	},
 	attackHook:function(attacker,victim){
 		
