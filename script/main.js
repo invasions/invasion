@@ -38,24 +38,14 @@ Item.setMaxDamage(addSelf.items[10]["id"],addSelf.items[10]["maxDamage"]);
 const GameType={SURVIVAL:0,CREATIVE:1};
 
 var Invasion={
-	useItem:function(x,y,z,itemId,blockId,side,itemDamage,blockDamage){
-		if((itemId==addSelf.items[16]["id"]||itemId==addSelf.items[17]["id"])&&blockId==addSelf.blocks["nexusBlock"]["id"]){
-			//
-		}
-	},
-	attackHook:function(attacker,victim){
-		
-	},
-	modTick:function(){
-		
-	},
-	destroyBlock:function(x,y,z,side){
-		
-	},
-	entityAddedHook:function(entity){
-		
-	}
+	rangeCount:0,
+	range:[32,40,48,56,64,72,80,88,96,104,112,120,128],
+	onSet:false,
+	isInvasion:false,
+	isContinues:false
 };
+
+var checkPos=[];
 
 function useItem(x,y,z,itemId,blockId,side,itemDamage,blockDamage){
 	Invasion.useItem(x,y,z,itemId,blockId,side,itemDamage,blockDamage);
@@ -76,3 +66,38 @@ function destroyBlock(x,y,z,side){
 function entityAddedHook(entity){
 	Invasion.entityAddedHook(entity);
 }
+
+
+Invasion.useItem=function(x,y,z,itemId,blockId,side,itemDamage,blockDamage){
+	if((itemId==addSelf.items[16]["id"]||itemId==addSelf.items[17]["id"])&&blockId==addSelf.blocks["nexusBlock"]["id"]){
+		Invasion.rangeCount++;
+			if(Invasion.rangeCount==13){
+				Invasion.rangeCount=0;
+			}
+		Data.save("range",Invasion.range[Invasion.rangeCount]);
+		clientMessage(Invasion.range[Invasion.rangeCount]);
+	}
+	
+	if(itemId==addSelf.blocks["nexusBlock"]["id"]){
+		switch(side){
+			case 0:Invasion.onSet=true;checkPos.push([x,y-1,z,itemId,itemDamage]);break;
+			case 1:Invasion.onSet=true;checkPos.push([x,y+1,z,itemId,itemDamage]);break;
+			case 2:Invasion.onSet=true;checkPos.push([x,y,z-1,itemId,itemDamage]);break;
+			case 3:Invasion.onSet=true;checkPos.push([x,y,z+1,itemId,itemDamage]);break;
+			case 4:Invasion.onSet=true;checkPos.push([x-1,y,z,itemId,itemDamage]);break;
+			case 5:Invasion.onSet=true;checkPos.push([x+1,y,z,itemId,itemDamage]);break;
+		}
+	}
+};
+
+Invasion.attackHook=function(attacker,victim){
+
+};
+
+Invasion.destroyBlock=function(x,y,z,side){
+
+};
+
+Invasion.entityAddedHook=function(entity){
+
+};
