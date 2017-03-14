@@ -77,7 +77,6 @@ Invasion.useItem=function(x,y,z,itemId,blockId,side,itemDamage,blockDamage){
 		Data.save("range",Invasion.range[Invasion.rangeCount]);
 		clientMessage(Invasion.range[Invasion.rangeCount]);
 	}
-	
 	if(itemId==addSelf.blocks["nexusBlock"]["id"]){
 		switch(side){
 			case 0:Invasion.onSet=true;checkPos.push([x,y-1,z,itemId,itemDamage]);break;
@@ -86,6 +85,19 @@ Invasion.useItem=function(x,y,z,itemId,blockId,side,itemDamage,blockDamage){
 			case 3:Invasion.onSet=true;checkPos.push([x,y,z+1,itemId,itemDamage]);break;
 			case 4:Invasion.onSet=true;checkPos.push([x-1,y,z,itemId,itemDamage]);break;
 			case 5:Invasion.onSet=true;checkPos.push([x+1,y,z,itemId,itemDamage]);break;
+		}
+	}
+};
+
+Invasion.modTick=function(){
+	if(Invasion.onSet){
+		for(let p=0;p<checkPos.length;p++){
+			if(checkPos[p][3]==getTile(checkPos[p][0],checkPos[p][1],checkPos[p][2])){
+				Data.save("x",checkPos[p][0]);
+				Data.save("y",checkPos[p][1]);
+				Data.save("z",checkPos[p][2]);
+				Data.save("range",Invasion.range[0]);
+			}
 		}
 	}
 };
