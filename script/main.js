@@ -22,7 +22,7 @@ const addSelf={
 		{"id":1919,"texture":"strongDampingAgent","number":0,"name":"Strong Damping Agent","stack":16}
 	],
 	blocks:{
-		nexusBlock:{"id":254,"name":"Nexus","texture":[["nexusTopOff",0],["nexusTopOff",0],["nexusSideOff",0],["nexusSideOff",0],["nexusSideOff",0],["nexusSideOff",0],["nexusTopOn",0],["nexusTopOn",0],["nexusSideOn",0],["nexusSideOn",0],["nexusSideOn",0],["nexusSideOn",0]],"tool":0,"light":true,"type":0,"count":1,"damage":[0,1]},
+		nexusBlock:{"id":254,"name":"Nexus","texture":[["nexusTopOff",0],["nexusTopOff",0],["nexusSideOff",0],["nexusSideOff",0],["nexusSideOff",0],["nexusSideOff",0],["nexusTopOn",0],["nexusTopOn",0],["nexusSideOn",0],["nexusSideOn",0],["nexusSideOn",0],["nexusSideOn",0]],"tool":0,"light":true,"type":0,"stack":1,"damage":[0,1]},
 		riftTrap:{},
 		frameTrap:{}
 	}
@@ -33,6 +33,9 @@ for(let is=0;is<addSelf.items.length;is++){
 	Player.addItemCreativeInv(addSelf.items[is]["id"],1,0);
 };
 
+Block.defineBlock(addSelf.blocks["nexusBlock"].id,addSelf.blocks["nexusBlock"].name,addSelf.blocks["nexusBlock"].texture,addSelf.blocks["nexusBlock"].tool,addSelf.blocks["nexusBlock"].light,addSelf.blocks["nexusBlock"].type);
+Player.addItemCreativeInv(addSelf.blocks["nexusBlock"].id,addSelf.blocks["nexusBlock"].stack,addSelf.blocks["nexusBlock"].damage[0]);
+Player.addItemCreativeInv(addSelf.blocks["nexusBlock"].id,addSelf.blocks["nexusBlock"].stack,addSelf.blocks["nexusBlock"].damage[1]);//あとで消す
 Item.setMaxDamage(addSelf.items[10]["id"],addSelf.items[10]["maxDamage"]);
 
 const GameType={SURVIVAL:0,CREATIVE:1};
