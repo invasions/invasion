@@ -38,6 +38,56 @@ Player.addItemCreativeInv(addSelf.blocks["nexusBlock"].id,addSelf.blocks["nexusB
 Player.addItemCreativeInv(addSelf.blocks["nexusBlock"].id,addSelf.blocks["nexusBlock"].stack,addSelf.blocks["nexusBlock"].damage[1]);//あとで消す
 Item.setMaxDamage(addSelf.items[10]["id"],addSelf.items[10]["maxDamage"]);
 
+const Environment=android.os.Environment;
+
+const File=java.io.File;
+const OutputStreamWriter=java.io.OutputStreamWriter;
+const FileInputStream=java.io.FileInputStream;
+const FileOutputStream=java.io.FileOutputStream;
+const FileWriter=java.io.FileWriter;
+const FileReader=java.io.FileReader;
+const BufferedWriter=java.io.BufferedWriter;
+const BufferedReader=java.io.BufferedReader;
+
+const directory=Environment.getExternalStorageDirectory().getAbsolutePath()+"/games/com.mojang/minecraftWorlds/";
+
+var Data={
+	encode:function(data){return JSON.stringify(data);},
+	decode:function(data){return JSON.parse(data);},
+	remove:function(name){
+		if(Array.isArray(name)){
+			for(let i=0;i<name.length;i++){
+				if(new File(directory+Level.getWorldDir()+"/"+modName+"/"+name[i]+".json").exists())
+							new File(directory+Level.getWorldDir()+"/"+modName+"/"+name[i]+".json").delete();
+			}
+		}else{
+			if(new File(dir.mods+Level.getWorldDir()+"/"+modName+"/"+name+".json").exists())
+						new File(dir.mods+Level.getWorldDir()+"/"+modName+"/"+name+".json").delete();
+		}
+	},
+	save:function(name,data){
+			new File(directory+Level.getWorldDir()+"/"+modName).mkdirs();
+			let saveFile=new File(directory+Level.getWorldDir()+"/"+modName,name+".json");	saveFile.createNewFile();
+			let output=new OutputStreamWriter(new FileOutputStream(saveFile));	output.append(Data.encode(data));	output.close();
+	},
+	load:function(name){
+		try{
+			var str=null;	var loadFile;	var c=0;
+			var fileReader=new FileReader(directory+Level.getWorldDir()+"/"+modName+"/"+name+".json");
+			var bufferedReader=new BufferedReader(fileReader);
+			while((loadFile=bufferedReader.readLine())!=null){
+				if(c==0){
+					str=loadFile;
+				}else{
+					str=str+"\n"+loadFile;
+				}c++;
+			}bufferedReader.close();	fileReader.close();
+		}catch(err){
+			print(err);
+		}return Data.decode(str);
+	}
+};
+
 const GameType={SURVIVAL:0,CREATIVE:1};
 
 var Invasion={

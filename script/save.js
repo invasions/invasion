@@ -4,23 +4,23 @@ var Data={
 	remove:function(name){
 		if(Array.isArray(name)){
 			for(let i=0;i<name.length;i++){
-				if(new File(directory+Level.getWorldDir()+"/"+modsn+"/"+name[i]+".json").exists())
-							new File(directory+Level.getWorldDir()+"/"+modsn+"/"+name[i]+".json").delete();
+				if(new File(directory+Level.getWorldDir()+"/"+modName+"/"+name[i]+".json").exists())
+							new File(directory+Level.getWorldDir()+"/"+modName+"/"+name[i]+".json").delete();
 			}
 		}else{
-			if(new File(dir.mods+Level.getWorldDir()+"/"+modsn+"/"+name+".json").exists())
-						new File(dir.mods+Level.getWorldDir()+"/"+modsn+"/"+name+".json").delete();
+			if(new File(dir.mods+Level.getWorldDir()+"/"+modName+"/"+name+".json").exists())
+						new File(dir.mods+Level.getWorldDir()+"/"+modName+"/"+name+".json").delete();
 		}
 	},
 	save:function(name,data){
-			new File(directory+Level.getWorldDir()+"/"+modsn).mkdirs();
-			let saveFile=new File(directory+Level.getWorldDir()+"/"+modsn,name+".json");	saveFile.createNewFile();
+			new File(directory+Level.getWorldDir()+"/"+modName).mkdirs();
+			let saveFile=new File(directory+Level.getWorldDir()+"/"+modName,name+".json");	saveFile.createNewFile();
 			let output=new OutputStreamWriter(new FileOutputStream(saveFile));	output.append(Data.encode(data));	output.close();
 	},
 	load:function(name){
 		try{
 			var str=null;	var loadFile;	var c=0;
-			var fileReader=new FileReader(directory+Level.getWorldDir()+"/"+modsn+"/"+name+".json");
+			var fileReader=new FileReader(directory+Level.getWorldDir()+"/"+modName+"/"+name+".json");
 			var bufferedReader=new BufferedReader(fileReader);
 			while((loadFile=bufferedReader.readLine())!=null){
 				if(c==0){
