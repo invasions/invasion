@@ -1,3 +1,5 @@
+var modName=".invasion";
+
 const addSelf={
 	items:[
 		{"id":1900,"texture":"phaseCrystal","number":0,"name":"Phase Crystal","stack":64},
@@ -91,6 +93,7 @@ var Data={
 const GameType={SURVIVAL:0,CREATIVE:1};
 
 var Invasion={
+	entArray:[],
 	rangeCount:0,
 	range:[32,40,48,56,64,72,80,88,96,104,112,120,128],
 	onSet:false,
@@ -122,15 +125,15 @@ function entityAddedHook(entity){
 
 
 Invasion.useItem=function(x,y,z,itemId,blockId,side,itemDamage,blockDamage){
-	if((itemId==addSelf.items[16]["id"]||itemId==addSelf.items[17]["id"])&&blockId==addSelf.blocks["nexusBlock"]["id"]){
-		Invasion.rangeCount++;
-			if(Invasion.rangeCount==13){
-				Invasion.rangeCount=0;
+	if((itemId==addSelf.items[16].id||itemId==addSelf.items[17].id)&&blockId==addSelf.blocks["nexusBlock"].id){
+		Invasion["rangeCount"]++;
+			if(Invasion["rangeCount"]==13){
+				Invasion["rangeCount"]=0;
 			}
-		Data.save("range",Invasion.range[Invasion.rangeCount]);
-		clientMessage(Invasion.range[Invasion.rangeCount]);
+		Data.save("range",Invasion.range[Invasion["rangeCount"]]);
+		clientMessage(Invasion.range[Invasion["rangeCount"]]);
 	}
-	if(itemId==addSelf.blocks["nexusBlock"]["id"]){
+	if(itemId==addSelf.blocks["nexusBlock"].id){
 		switch(side){
 			case 0:Invasion.onSet=true;checkPos.push([x,y-1,z,itemId,itemDamage]);break;
 			case 1:Invasion.onSet=true;checkPos.push([x,y+1,z,itemId,itemDamage]);break;
@@ -160,9 +163,86 @@ Invasion.attackHook=function(attacker,victim){
 };
 
 Invasion.destroyBlock=function(x,y,z,side){
-
+	if(getTile(x,y,z)==addSelf.blocks["nexusBlock"].id){
+		Data.remove(["x","y","z","range"]);
+	}
 };
 
 Invasion.entityAddedHook=function(entity){
-
+var getEntityID=Entity.getEntityTypeId;
+	if(getEntityID(entity)==32||getEntityID(entity)==33||getEntityID(entity)==34||getEntityID(entity)==35||getEntityID(entity)==36||getEntityID(entity)==40||getEntityID(entity)==44){
+Invasion["entArray"].push(entity);
+	}
+	if(Invasion.isOn){
+	var nx=Data.load("x");
+	var nz=Data.load("z");
+	var nr=Data.load("range");
+		for(let e=0;e<Invasion["entArray"].length;e++){
+			if(getEntityID(Ent[e])==32||getEntityID(Ent[e])==33||getEntityID(Ent[e])==34||getEntityID(Ent[e])==35||getEntityID(Ent[e])==36||getEntityID(Ent[e])==40||getEntityID(Ent[e])==44){
+			var ex=Entity.getX(Ent[e]);
+			var ez=Entity.getZ(Ent[e]);
+				if(Math.sqrt(Math.pow(nx-ex,2)+Math.pow(nz-ez,2))<nr){
+				Entity.remove(Ent[e]);
+				}
+			}
+		}
+	}
 };
+
+const Armor={
+	Leather:{
+		helmet:{"id":298,"defence":1},
+		chestplate:{"id":299,"defence":3},
+		leggings:{"id":300,"defence":2},
+		boots:{"id":301,"defence":1}
+	},
+	Chain:{
+		helmet:{"id":302,"defence":2},
+		chestplate:{"id":303,"defence":5},
+		leggings:{"id":304,"defence":4},
+		boots:{"id":305,"defence":1}
+	},
+	Iron:{
+		helmet:{"id":306,"defence":2},
+		chestplate:{"id":307,"defence":6},
+		leggings:{"id":308,"defence":5},
+		boots:{"id":309,"defence":2}
+	},
+	Diamond:{
+		helmet:{"id":310,"defence":3},
+		chestplate:{"id":311,"defence":8},
+		leggings:{"id":312,"defence":6},
+		boots:{"id":313,"defence":3}
+	},
+	Gold:{
+		helmet:{"id":314,"defence":2},
+		chestplate:{"id":315,"defence":5},
+		leggings:{"id":316,"defence":3},
+		boots:{"id":317,"defence":1}
+	}
+};
+
+Invasion.calculator=function(power){
+	switch(){
+		case Armor.Leather["helmet"].id:
+			return damage=power*(1-(Armor.Leather["helmet"].defence-power/2)/30)
+		break;
+	}
+};
+
+Invasion.setInfusedSword=function(){
+var getId=Player.getCarriedItem();
+var getStack=Player.getCarriedItemCount();
+var getDamage=Player.getCarriedItemData();
+var getEntityHP=Entity.getHealth();
+var getEntityArm=Entity.getArmor(entity,int);
+	if(getId==addSelf.items[10].id){
+		
+	}
+};
+
+/*
+damage=power*(1-Math.min(20,Math.max(defencePoints/5,defencePoints-power/(2+toughness/4)))/25);
+or
+damage=damage*(1-(defencePoints-danage/2)/30);
+*/
