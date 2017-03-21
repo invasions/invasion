@@ -222,12 +222,9 @@ const Armor={
 	}
 };
 
-Invasion.calculator=function(power){
-	switch(){
-		case Armor.Leather["helmet"].id:
-			return damage=power*(1-(Armor.Leather["helmet"].defence-power/2)/30)
-		break;
-	}
+Invasion.calculator=function(entity,power){
+var getEntityArm=Entity.getArmor;
+
 };
 
 Invasion.setInfusedSword=function(){
